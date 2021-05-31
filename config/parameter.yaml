@@ -1,5 +1,5 @@
 parameters:
- urlMongodb: mongodb://localhost:27017/dbsharing
+ urlMongodb: mongodb://localhost:27017/dbsharing # '%env(MONGODB_URL)%'
  dnsname: testdns 
  nameDBMogodb: dbsharing
  mailuser: tst 
