@@ -1,0 +1,223 @@
+{% extends 'Admin/statistique_ad/basead.html.twig' %}
+  {% block stylesheets %}
+ <script src="http://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+    <link href="https://nightly.datatables.net/css/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+  
+   <link href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.min.css">
+ <link href="https://cdn.datatables.net/responsive/2.2.7/css/responsive.dataTables.min.css">
+   
+ {% endblock %}
+ 
+{% block body %}
+<div class="showback" style="width: 700px;margin-left: 221px;margin-top: 20px;">
+             
+              <form   action="{{path('envoyeenretard')}}">
+  <label for="appt-time"style="margin-left: 49px;">Saisir le retard accepté: </label>
+  <input id="appt-time" type="time" name="temps" required autofocus >
+              <a href=""> <button type="submit"  style="margin-left:13px;" class="btn btn-theme">Chercher</button> </a>
+
+</form>
+</div> 
+
+ <div class="container">
+ <div class="row mb" style="margin-left:10px;margin-right:10px;margin-top:100px">
+          <!-- page start-->
+          <div class="content-panel"cellspacing="50">
+      <table id="hidden-table-info" cellpadding="0" cellspacing="0" border="0" class="display  table  table-bordered"  width="100%">
+        <thead>
+                  <tr>
+                    <th class="thnomprenom" > Nom Prenom</th> 
+                    <th class="thnomprenom" >société</th>
+                     <th class="thnomprenom" >Date</th>
+                    <th class="thnomprenom">Nombre des alertes</th>
+                    
+                  </tr>
+                  <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+           
+          </tr>
+                </thead>
+                
+                <tbody>
+                {% for info in infoemp%}
+                {%for  emp in info['employe']%}
+                {% if info['idsociete']== emp.societe%}
+                {%for  alert in info['alert']%}
+                  {%for  alerte in alert['infoalert']%}
+                  {% if emp.idemp== alerte.idemp%}
+                  <tr class="gradeX">
+                   
+                    <td class="center hidden-phone">{{emp.nom}}</td>
+                    <td class="center hidden-phone">{{info['nomsociete']}}</td>
+                    <td class="center hidden-phone">{{alerte.date}}</td>
+                    <td class="center hidden-phone">in</td>
+                   
+                    
+                  </tr>
+                  {%endif%}
+                  {%endfor%}
+                  {%endfor%}
+                  {%endif%}
+                  {%endfor%}
+                  {%endfor%}
+                
+               </tbody>
+      </table>
+    </div>
+    </div></div>
+        <!-- /row -->
+     
+      
+{% block javascripts %}
+ 
+  <script src="https://nightly.datatables.net/js/jquery.dataTables.js"></script>
+    
+    <link href="https://nightly.datatables.net/buttons/css/buttons.dataTables.css?_=c6b24f8a56e04fcee6105a02f4027462.css" rel="stylesheet" type="text/css" />
+    <script src="https://nightly.datatables.net/buttons/js/dataTables.buttons.js?_=c6b24f8a56e04fcee6105a02f4027462"></script>
+    <script src="https://nightly.datatables.net/buttons/js/buttons.colVis.js?_=c6b24f8a56e04fcee6105a02f4027462"></script>
+
+  
+  <!--script for this page-->
+ <script type="text/javascript">
+   $(document).ready( function () {
+   $('#hidden-table-info').dataTable({
+            "bDestroy": true
+      }).fnDestroy();
+  function buildSelect( table ) {
+    
+    $("thead tr:eq(1) td").each( function () {
+      $(this).empty();
+    });
+    
+    table
+    .columns([0,1,2,3])
+    .every( function () {
+      var column = this;
+      var visIndex = column.index('visible');
+      
+      if ( visIndex !== null ) { 
+      
+        var select = $('<select><option class="selectretrad"></option></select>')
+        .appendTo( $("thead tr:eq(1) td").eq( visIndex ).empty() )
+        .on( 'change', function () {
+          var val = $.fn.dataTable.util.escapeRegex($(this).val());
+          column
+          .search( val ? '^' + val + '$' : '', true, false ).draw();
+            /* highlight select filter if it contains a value
+          	if (val === '') {
+		      $("thead tr:eq(1) td:eq(" + visIndex + ") select").css('color', '#333').css('background-color', '#fff');
+	        } else {
+              $("thead tr:eq(1) td:eq(" + visIndex + ") select").css('color', '#000').css('background-color', '#ff0');
+	        } */
+        });
+
+        table
+        .cells( null, column.index(), {search: 'applied'})
+        .render('filter')
+        .unique()
+        .sort()
+        .each( function ( d, j ) {
+          select.append( '<option value="' + d + '">' + d + '</option>' );
+        });
+        // The rebuild will clear the exisiting select, so it needs to be repopulated
+        var currSearch = column.search();
+        if ( currSearch ) {
+          select.val( currSearch.substring(1, currSearch.length-1).replace(/\\(.)/g, '$1') );
+           // highlight select filter if it contains a value
+           $("thead tr:eq(1) td:eq(" + visIndex + ") select").css('color', '#000').css('background-color', '');
+        }
+      }
+
+    });
+  }
+  
+  
+  var table = $('#hidden-table-info').DataTable({
+           "language": {
+            "lengthMenu": "Afficher_MENU_ enregistrements par page",
+            "zeroRecords": "aucun résultat",
+            "search": "Recherche",
+              "paginate": {
+      "previous": "Précédent",
+            "next":"Suivant"
+    },
+            "info": "Afficher la page _PAGE_ of _PAGES_",
+            "infoEmpty": "No records available",
+            "infoFiltered": "(filtered from _MAX_ total records)"
+        },
+        orderCellsTop: true,
+        
+          
+           columnDefs:
+[
+    // Use ClumnDefs to force the formatting of each column
+    {
+        targets: [3],
+        render: function (data, type, row)
+        {
+            if (type === 'display') {
+              if (data == " in ")
+              {
+                  return '<i class="fa fa-fw fa-check"></i>';
+              }
+              else
+              {
+                  return '<i class="fa fa-check-circle"></i>';                                       
+              }
+            }
+            return data;
+        }
+    }],
+        
+    
+    
+    
+    
+       
+
+
+        initComplete: function() {
+          buildSelect( this.api() );
+        }, 
+    
+  });
+
+  table.on( 'draw', function () {
+    buildSelect( table );
+  } );
+
+  
+} );
+
+
+
+  </script>
+   
+{% endblock %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

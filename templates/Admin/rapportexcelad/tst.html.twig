@@ -1,0 +1,103 @@
+{% extends 'Admin/statistique_ad/basead.html.twig' %}
+
+{% block title %} Paramètre général!{% endblock %}
+
+{% block stylesheets %}
+ <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-fileupload/bootstrap-fileupload.css')}}" >
+  <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-datepicker/css/datepicker.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-daterangepicker/daterangepicker.css')}}" >
+  <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-timepicker/compiled/timepicker.css')}}" >
+  <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-datetimepicker/datertimepicker.css')}}" >
+ <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" />
+
+  
+  
+{% endblock %}
+{% block body %}
+
+
+              
+                <a href="javascript:void(0);" id="togle" data-toggle="tooltip">Hyperlink Text</a>
+                   <div class="form-group" style="margin-top:13px;">
+                  <label class="control-label col-md-3" style="font-size:15px;color:black">URL </label>
+                  <div class="col-md-3 col-xs-11">
+                    <input class="form-control form-control-inline" style="width:293px" size="16" type="text"  name="url" value="" data-toggle="tooltip"  title="<b>Enter password that must be:</b> 
+ <br>6-24 characters long
+  <br>Must contain a number 
+  <br>Must contain a capital letter"  data-html="true"   required autofocus>
+                    
+                  </div>
+                </div>
+             
+                   <div class="form-group" >
+                 <div class="ctr1">
+                 <button  class="add_form_field">Add New Field &nbsp; <span style="font-size:16px; font-weight:bold;">+ </span>
+                 </button>
+                 <div><input type="text" name="mytext[]"></div>
+                  </div>
+                 </div>
+                
+                 
+                  
+
+
+ 
+
+ 
+        {% block javascripts %}
+  <!-- js placed at the end of the document so the pages load faster -->
+  
+  <script src="{{asset('lib/bootstrap/js/bootstrap.min.js')}}"></script>
+  <script class="include" type="text/javascript" src="{{asset('lib/jquery.dcjqaccordion.2.7.js')}}"></script>
+  <script src="{{asset('lib/jquery.scrollTo.min.js')}}"></script>
+  <script src="{{asset('lib/jquery.nicescroll.js')}}" type="text/javascript"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <!--common script for all pages-->
+   
+  <!--script for this page-->
+  
+  <script type="text/javascript" src="{{asset('lib/bootstrap-fileupload/bootstrap-fileupload.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-daterangepicker/date.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-daterangepicker/moment.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-timepicker/js/bootstrap-timepicker.js')}}"></script>
+  <script src="{{asset('lib/advanced-form-components.js')}}"></script>
+  
+ <script type="text/javascript">
+
+  $('#togle').tooltip({
+      title: "<b>Enter password that must be:</b><br>6-24 characters long<br>Must contain a number  ",
+      html: true,
+      placement: "bottom"
+  });
+  
+    var max_fields = 10;
+    var wrapper = $(".ctr1");
+    var add_button = $(".add_form_field");
+
+    var x = 1;
+    $(add_button).click(function(e) {
+        
+        if (x < max_fields) {
+            x++;
+            $(wrapper).append('<div><input type="text" name="mytext[]"/><a href="#" class="delete">Delete</a></div>'); //add input box
+
+        } else {
+            alert('You Reached the limits')
+        }
+    });
+
+    $(wrapper).on("click", ".delete", function(e) {
+        
+        $(this).parent('div').remove();
+        x--;
+    });
+
+
+ 
+</script>
+{% endblock %}
+{% endblock %}

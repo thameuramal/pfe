@@ -1,0 +1,115 @@
+{% extends 'Admin/statistique_ad/basead.html.twig' %}
+{% block title %}Profil Utilisateur{% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-fileupload/bootstrap-fileupload.css')}}" >
+  <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-datepicker/css/datepicker.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-daterangepicker/daterangepicker.css')}}" >
+  <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-timepicker/compiled/timepicker.css')}}" >
+  <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-datetimepicker/datertimepicker.css')}}" >
+{% endblock %}
+{% block body %}
+  <div class="row mt">
+          <!--  DATE PICKERS -->
+          
+          <div class="col-lg-12" style="width:652px;margin-left:278px;margin-top:18px;">
+            <div class="form-panel">
+<form class="form-horizontal style-form"   action="{{ path('rolemodifier',{ 'idemp':idemp})}}">
+         
+      
+        <div class="form-group" style="margin-top:13px;" >
+                  <label class="control-label col-md-3" style="font-size:15px;color:black">Nom Prenom</label>
+                  <div class="col-md-3 col-xs-11">
+                    <input class="form-control form-control-inline " size="16" type="text" style="width:293px" name="nom"  value="{{nom}}"required autofocus>
+                    
+                  </div> 
+                </div>
+          <div class="form-group" >
+                  <label class="control-label col-md-3" style="font-size:15px;color:black">Société</label>
+                  <div class="col-md-3 col-xs-11">
+   <select  class="form-control" id="societe" style="color:black;width:287px;height:40px; font-family: 'FontAwesome'" name="societe" >
+
+{%for soc in societe%}
+      {%if soc.numero== numsociete%}
+  <option value="{{soc.numero}}" selected="selected"> &nbsp;&nbsp;&nbsp;&#xf2c2; {{soc.nom}}</option>
+  
+  {%else%}
+  <option value="{{soc.numero}}" > &nbsp;&nbsp;&nbsp;&#xf2c2; {{soc.nom}}</option>
+  {%endif%}
+ {%endfor%}   
+ </select>                 
+                  </div> 
+                </div>
+                 
+                   <div class="form-group" style="margin-top:13px;" >
+                  <label class="control-label col-md-3" style="font-size:15px;color:black">Email</label>
+                  <div class="col-md-3 col-xs-11">
+                    <input class="form-control form-control-inline " size="16" type="text" style="width:293px" name="email"  value="{{email}}"required autofocus>
+                    
+                  </div> 
+                </div>
+                
+                  <div class="form-group">
+                  <label class="control-label col-md-3" style="font-size:15px;color:black">Matricule</label>
+                  <div class="col-md-3 col-xs-11">
+                    <input class="form-control form-control-inline " size="16" style="width:293px" type="text" name="matricule"  value="{{matricule}}"required autofocus>
+                    
+                  </div>
+                </div> 
+                
+   
+          <div class="form-group">
+        
+         <label for="role" style="color:black; font-size:15px;margin-left: -122px;margin-top:10px">Role:</label>
+         <div class="col-md-3 col-xs-11">
+<select id="role" class="form-control form-control-inline" style="width:293px;margin-left:169px;" name="role">
+  {% if roleemployer =='EMPLOYER'%}
+  <option value="EMPLOYER" selected="selected">EMPLOYER</option>
+  <option value="RH">RH</option>
+  {%else%}
+  <option value="EMPLOYER">EMPLOYER</option>
+  <option value="RH" selected="selected">RH</option>
+  {%endif%}
+</select>
+</div>
+
+         
+          </div>
+         
+          <div class="registration">
+           <a href="" > <button class="btn btn-theme " href="index.html" type="submit" style="margin-left:263px;"> Modifier</button></a>
+
+          </div>
+      
+    
+        <!-- modal -->
+      </form>
+
+          </div>
+        
+        </div>
+
+
+
+
+ 
+ {% block javascripts %}
+ <script src="{{asset('lib/jquery/jquery.min.js')}}"></script>
+  <script src="{{asset('lib/bootstrap/js/bootstrap.min.js')}}"></script>
+  <script class="include" type="text/javascript" src="{{asset('lib/jquery.dcjqaccordion.2.7.js')}}"></script>
+  <script src="{{asset('lib/jquery.scrollTo.min.js')}}"></script>
+  <script src="{{asset('lib/jquery.nicescroll.js')}}" type="text/javascript"></script>
+  <!--common script for all pages-->
+  
+  <!--script for this page-->
+  
+  <script type="text/javascript" src="{{asset('lib/bootstrap-fileupload/bootstrap-fileupload.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-daterangepicker/date.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-daterangepicker/moment.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-timepicker/js/bootstrap-timepicker.js')}}"></script>
+  <script src="{{asset('lib/advanced-form-components.js')}}"></script>
+  
+{% endblock %}
+{% endblock %}

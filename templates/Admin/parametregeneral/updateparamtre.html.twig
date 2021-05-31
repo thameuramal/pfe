@@ -1,0 +1,1551 @@
+{% extends 'Admin/statistique_ad/basead.html.twig' %}
+
+{% block title %} Paramètre général{% endblock %}
+
+{% block stylesheets %}
+ <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-fileupload/bootstrap-fileupload.css')}}" >
+  <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-datepicker/css/datepicker.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-daterangepicker/daterangepicker.css')}}" >
+  <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-timepicker/compiled/timepicker.css')}}" >
+  <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-datetimepicker/datertimepicker.css')}}" >
+ 
+  <link rel="stylesheet" href="css/jquery.tooltip/jquery.tooltip.css">
+  
+{% endblock %}
+{% block body %}
+
+          <div class="col-lg-12" style="width:652px;margin-left:278px;margin-top:-6px;">
+            <div class="form-panel">
+              <form action="{{ path('generalparameterupdate')}}"  method="post" class="form-horizontal style-form">
+                <div class="form-group" style="margin-top:13px;">
+                  <label class="control-label col-md-3" style="font-size:15px;color:black">URL </label>
+                  <div class="col-md-3 col-xs-11">
+                    <input class="form-control form-control-inline" style="width:293px" size="16" type="text"  name="url" value="{{url}}"    required autofocus>
+                    
+                  </div>
+                </div>
+                 
+                 
+                
+                  <div class="form-group">
+                  <label class="control-label col-md-3" style="font-size:15px;color:black">Domaines</label>
+                  <div class="col-md-3 col-xs-11">
+               {%for doms in domaines|split("/")%}
+                <div class="field_wrappers">
+    <div> 
+    
+
+        <input type="text" name="domaine[]"  class="form-control form-control-inline " size="16" style="width:293px" value="{{doms}}" id="righttip" ><a href="javascript:void(0);" class="remove_button btn btn-danger  btn-sm" style="margin-left: 309px;margin-top: -52px;"><i class="fa fa-trash-o"></i></a>
+
+    
+    </div>
+    </div> 
+    {%endfor%}
+        <div class="field_wrapper">
+    <div>
+    <input type="text" name="domaine[]"  class="form-control form-control-inline " size="16" style="width:293px" value="" id="righttip" title="Ajouter vos propres domaines ,exemples: 
+        - gmail.com
+        - yahoo.fr
+        - nom_société.tn" />
+        <a href="javascript:void(0);" class="add_button  btn btn-success btn-sm" title="Add field" style="margin-left: 300px;margin-top: -53px;"><i class="fa fa-plus"></i></a><a href="javascript:void(0);" class="remove_button btn btn-danger  btn-sm" style="margin-left: 333px;margin-top: -89px;"><i class="fa fa-trash-o"></i></a>
+  </div>
+    </div>
+</div> 
+                  </div>  
+                
+                 
+                  
+<div class="form-group"> 
+<label class="control-label col-md-3" style="font-size:15px;color:black">Plages Horaires</label>
+{%if senace=='Double séance'%}
+<input type="radio" id="yesCheck" name="sens"  onclick="javascript:yesnoCheck();" value="Double séance"  style="margin-top: 10px;" checked>
+  <label for="double">Double séance</label>
+  <input type="radio" id="noCheck" name="sens"  onclick="javascript:nonoCheck();" value="séance  unique">
+  <label for="unique">séance  unique</label>
+  {%else%}
+  <input type="radio" id="yesCheck" name="sens"  onclick="javascript:yesnoCheck();" value="Double séance"  style="margin-top: 10px;" >
+  <label for="double">Double séance</label>
+  <input type="radio" id="noCheck" name="sens"  onclick="javascript:nonoCheck();" value="séance  unique"checked>
+  <label for="unique">séance  unique</label>
+ {%endif%}
+</div>
+<div class="form-group" style="margin-top: 27px; color:black;display:none;" name="double" id="double">
+ 
+<label style="margin-left: 128px;" >Matin</label>
+<select id="retard"    name="matindouble" style="margin-left: 14px;">
+
+ {%if heurematin=='07:00:00'%}
+  <option value="07:00:00 "selected="selected">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option> 
+  {%elseif heurematin=='08:00:00'%}
+  <option value="08:00:00" "selected="selected">&nbsp; &nbsp; 08:00:00</option>
+   <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option>
+  {%elseif heurematin=='09:00:00'%}
+  <option value="09:00:00" "selected="selected">&nbsp; &nbsp; 09:00:00</option>
+   <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option>
+  {%elseif heurematin=='10:00:00'%}
+  <option value="10:00:00" "selected="selected">&nbsp; &nbsp; 10:00:00</option>
+   <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+ 
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option>
+  {%elseif heurematin=='11:00:00'%}
+  <option value="11:00:00" "selected="selected">&nbsp; &nbsp; 11:00:00</option>
+   <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option>
+  {%elseif heurematin=='12:00:00'%}
+  <option value="12:00:00" "selected="selected">&nbsp; &nbsp; 12:00:00</option> 
+   <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option>
+    {%elseif heurematin=='13:00:00'%}
+ <option value="13:00:00" "selected="selected">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+   
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option>
+   {%elseif heurematin=='14:00:00'%}
+  <option value="14:00:00" "selected="selected">&nbsp; &nbsp; 14:00:00</option> 
+   <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option>
+  {%elseif heurematin=='15:00:00'%}
+  <option value="15:00:00" "selected="selected">&nbsp; &nbsp; 15:00:00</option> 
+   <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option>
+  {%elseif heurematin=='16:00:00'%}
+  <option value="16:00:00" "selected="selected">&nbsp; &nbsp; 16:00:00</option> 
+   <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  
+ 
+
+  {%endif%}
+</select>
+<label  style="margin-left:24px;" >Retard accepté</label>
+<select id="retard"    name="retardmatindouble">
+
+ {%if retardmatin=='00:05:00'%}
+  <option value="00:05:00" "selected="selected">&nbsp; &nbsp; 00:05:00</option>
+    
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:10:00'%}
+  <option value="00:10:00" "selected="selected">&nbsp; &nbsp; 00:10:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:15:00'%}
+  <option value="00:15:00""selected="selected">&nbsp; &nbsp; 00:15:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:20:00'%}
+  <option value="00:20:00""selected="selected">&nbsp; &nbsp; 00:20:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:25:00'%}
+  <option value="00:25:00""selected="selected">&nbsp; &nbsp; 00:25:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:30:00'%}
+  <option value="00:30:00""selected="selected">&nbsp; &nbsp; 00:30:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:35:00'%}
+  <option value="00:35:00""selected="selected">&nbsp; &nbsp; 00:35:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:40:00'%}
+  <option value="00:40:00" "selected="selected">&nbsp; &nbsp; 00:40:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:45:00'%}
+  <option value="00:45:00" "selected="selected">&nbsp; &nbsp; 00:45:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:50:00'%}
+  <option value="00:50:00" "selected="selected">&nbsp; &nbsp; 00:50:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:55:00'%}
+  <option value="00:55:00" "selected="selected">&nbsp; &nbsp; 00:55:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='01:00:00'%}
+  <option value="01:00:00" "selected="selected">&nbsp; &nbsp; 01:00:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='01:05:00'%}
+  <option value="01:05:00" "selected="selected">&nbsp; &nbsp; 01:05:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+    {%elseif retardmatin=='01:15:00'%}
+ <option value="01:15:00" "selected="selected">&nbsp; &nbsp; 01:15:00</option>
+   <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+   {%elseif retardmatin=='01:20:00'%}
+  <option value="01:20:00" "selected="selected">&nbsp; &nbsp; 01:20:00</option> 
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+   {%elseif retardmatin=='01:25:00'%}
+  <option value="01:25:00" "selected="selected">&nbsp; &nbsp; 01:25:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+    {%elseif retardmatin=='01:30:00'%}
+  <option value="01:30:00" "selected="selected">&nbsp; &nbsp; 01:30:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  
+  {%endif%}
+</select>
+<div style="margin-left: 103px;">
+<label  >Après-midi</label>
+<select id="retard"    name="apresmidi">
+ {%if heureapresmidi=='12:00:00'%}
+  <option value="12:00:00" "selected="selected">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option> 
+  <option value="17:00:00">&nbsp; &nbsp; 17:00:00</option> 
+  <option value="18:00:00">&nbsp; &nbsp; 18:00:00</option> 
+  <option value="19:00:00">&nbsp; &nbsp; 19:00:00</option> 
+  <option value="20:00:00">&nbsp; &nbsp; 20:00:00</option> 
+  <option value="21:00:00">&nbsp; &nbsp; 21:00:00</option> 
+  <option value="22:00:00">&nbsp; &nbsp; 22:00:00</option> 
+  <option value="23:00:00">&nbsp; &nbsp; 23:00:00</option> 
+  <option value="00:00:00">&nbsp; &nbsp; 00:00:00</option> 
+    {%elseif heureapresmidi=='13:00:00'%}
+ <option value="13:00:00" "selected="selected">&nbsp; &nbsp; 13:00:00</option> 
+ <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option> 
+  <option value="17:00:00">&nbsp; &nbsp; 17:00:00</option> 
+  <option value="18:00:00">&nbsp; &nbsp; 18:00:00</option> 
+  <option value="19:00:00">&nbsp; &nbsp; 19:00:00</option> 
+  <option value="20:00:00">&nbsp; &nbsp; 20:00:00</option> 
+  <option value="21:00:00">&nbsp; &nbsp; 21:00:00</option> 
+  <option value="22:00:00">&nbsp; &nbsp; 22:00:00</option> 
+  <option value="23:00:00">&nbsp; &nbsp; 23:00:00</option> 
+  <option value="00:00:00">&nbsp; &nbsp; 00:00:00</option> 
+   {%elseif heureapresmidi=='14:00:00'%}
+  <option value="14:00:00" "selected="selected">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option> 
+  <option value="17:00:00">&nbsp; &nbsp; 17:00:00</option> 
+  <option value="18:00:00">&nbsp; &nbsp; 18:00:00</option> 
+  <option value="19:00:00">&nbsp; &nbsp; 19:00:00</option> 
+  <option value="20:00:00">&nbsp; &nbsp; 20:00:00</option> 
+  <option value="21:00:00">&nbsp; &nbsp; 21:00:00</option> 
+  <option value="22:00:00">&nbsp; &nbsp; 22:00:00</option> 
+  <option value="23:00:00">&nbsp; &nbsp; 23:00:00</option> 
+  <option value="00:00:00">&nbsp; &nbsp; 00:00:00</option> 
+  {%elseif heureapresmidi=='15:00:00'%}
+  <option value="15:00:00" "selected="selected">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option> 
+  <option value="17:00:00">&nbsp; &nbsp; 17:00:00</option> 
+  <option value="18:00:00">&nbsp; &nbsp; 18:00:00</option> 
+  <option value="19:00:00">&nbsp; &nbsp; 19:00:00</option> 
+  <option value="20:00:00">&nbsp; &nbsp; 20:00:00</option> 
+  <option value="21:00:00">&nbsp; &nbsp; 21:00:00</option> 
+  <option value="22:00:00">&nbsp; &nbsp; 22:00:00</option> 
+  <option value="23:00:00">&nbsp; &nbsp; 23:00:00</option> 
+  <option value="00:00:00">&nbsp; &nbsp; 00:00:00</option> 
+  {%elseif heureapresmidi=='16:00:00'%}
+  <option value="16:00:00" "selected="selected">&nbsp; &nbsp; 16:00:00</option> 
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="17:00:00">&nbsp; &nbsp; 17:00:00</option> 
+  <option value="18:00:00">&nbsp; &nbsp; 18:00:00</option> 
+  <option value="19:00:00">&nbsp; &nbsp; 19:00:00</option> 
+  <option value="20:00:00">&nbsp; &nbsp; 20:00:00</option> 
+  <option value="21:00:00">&nbsp; &nbsp; 21:00:00</option> 
+  <option value="22:00:00">&nbsp; &nbsp; 22:00:00</option> 
+  <option value="23:00:00">&nbsp; &nbsp; 23:00:00</option> 
+  <option value="00:00:00">&nbsp; &nbsp; 00:00:00</option> 
+  {%elseif heureapresmidi=='17:00:00'%} 
+  <option value="17:00:00" "selected="selected">&nbsp; &nbsp; 17:00:00</option> 
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option> 
+  <option value="18:00:00">&nbsp; &nbsp; 18:00:00</option> 
+  <option value="19:00:00">&nbsp; &nbsp; 19:00:00</option> 
+  <option value="20:00:00">&nbsp; &nbsp; 20:00:00</option> 
+  <option value="21:00:00">&nbsp; &nbsp; 21:00:00</option> 
+  <option value="22:00:00">&nbsp; &nbsp; 22:00:00</option> 
+  <option value="23:00:00">&nbsp; &nbsp; 23:00:00</option> 
+  <option value="00:00:00">&nbsp; &nbsp; 00:00:00</option> 
+  {%elseif heureapresmidi=='18:00:00'%}
+  <option value="18:00:00" "selected="selected">&nbsp; &nbsp; 18:00:00</option> 
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option> 
+  <option value="17:00:00">&nbsp; &nbsp; 17:00:00</option> 
+  <option value="19:00:00">&nbsp; &nbsp; 19:00:00</option> 
+  <option value="20:00:00">&nbsp; &nbsp; 20:00:00</option> 
+  <option value="21:00:00">&nbsp; &nbsp; 21:00:00</option> 
+  <option value="22:00:00">&nbsp; &nbsp; 22:00:00</option> 
+  <option value="23:00:00">&nbsp; &nbsp; 23:00:00</option> 
+  <option value="00:00:00">&nbsp; &nbsp; 00:00:00</option> 
+  {%elseif heureapresmidi=='19:00:00'%}
+  <option value="19:00:00" "selected="selected">&nbsp; &nbsp; 19:00:00</option> 
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option> 
+  <option value="17:00:00">&nbsp; &nbsp; 17:00:00</option> 
+  <option value="18:00:00">&nbsp; &nbsp; 18:00:00</option> 
+  <option value="20:00:00">&nbsp; &nbsp; 20:00:00</option> 
+  <option value="21:00:00">&nbsp; &nbsp; 21:00:00</option> 
+  <option value="22:00:00">&nbsp; &nbsp; 22:00:00</option> 
+  <option value="23:00:00">&nbsp; &nbsp; 23:00:00</option> 
+  <option value="00:00:00">&nbsp; &nbsp; 00:00:00</option> 
+  {%elseif heureapresmidi=='20:00:00'%}
+  <option value="20:00:00" "selected="selected">&nbsp; &nbsp; 20:00:00</option> 
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option> 
+  <option value="17:00:00">&nbsp; &nbsp; 17:00:00</option> 
+  <option value="18:00:00">&nbsp; &nbsp; 18:00:00</option> 
+  <option value="19:00:00">&nbsp; &nbsp; 19:00:00</option> 
+  <option value="21:00:00">&nbsp; &nbsp; 21:00:00</option> 
+  <option value="22:00:00">&nbsp; &nbsp; 22:00:00</option> 
+  <option value="23:00:00">&nbsp; &nbsp; 23:00:00</option> 
+  <option value="00:00:00">&nbsp; &nbsp; 00:00:00</option> 
+  {%elseif heureapresmidi=='21:00:00'%}
+  <option value="21:00:00" "selected="selected">&nbsp; &nbsp; 21:00:00</option> 
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option> 
+  <option value="17:00:00">&nbsp; &nbsp; 17:00:00</option> 
+  <option value="18:00:00">&nbsp; &nbsp; 18:00:00</option> 
+  <option value="19:00:00">&nbsp; &nbsp; 19:00:00</option> 
+  <option value="20:00:00">&nbsp; &nbsp; 20:00:00</option> 
+  <option value="22:00:00">&nbsp; &nbsp; 22:00:00</option> 
+  <option value="23:00:00">&nbsp; &nbsp; 23:00:00</option> 
+  <option value="00:00:00">&nbsp; &nbsp; 00:00:00</option> 
+  {%elseif heureapresmidi=='22:00:00'%}
+  <option value="22:00:00" "selected="selected">&nbsp; &nbsp; 22:00:00</option> 
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option> 
+  <option value="17:00:00">&nbsp; &nbsp; 17:00:00</option> 
+  <option value="18:00:00">&nbsp; &nbsp; 18:00:00</option> 
+  <option value="19:00:00">&nbsp; &nbsp; 19:00:00</option> 
+  <option value="20:00:00">&nbsp; &nbsp; 20:00:00</option> 
+  <option value="21:00:00">&nbsp; &nbsp; 21:00:00</option> 
+  <option value="23:00:00">&nbsp; &nbsp; 23:00:00</option> 
+  <option value="00:00:00">&nbsp; &nbsp; 00:00:00</option> 
+  {%elseif heureapresmidi=='23:00:00'%}
+  <option value="23:00:00" "selected="selected">&nbsp; &nbsp; 23:00:00</option> 
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option> 
+  <option value="17:00:00">&nbsp; &nbsp; 17:00:00</option> 
+  <option value="18:00:00">&nbsp; &nbsp; 18:00:00</option> 
+  <option value="19:00:00">&nbsp; &nbsp; 19:00:00</option> 
+  <option value="20:00:00">&nbsp; &nbsp; 20:00:00</option> 
+  <option value="21:00:00">&nbsp; &nbsp; 21:00:00</option> 
+  <option value="22:00:00">&nbsp; &nbsp; 22:00:00</option> 
+  <option value="00:00:00">&nbsp; &nbsp; 00:00:00</option> 
+  {%elseif apresmidi=='00:00:00'%}
+  <option value="00:00:00" "selected="selected">&nbsp; &nbsp; 00:00:00</option> 
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option> 
+  <option value="17:00:00">&nbsp; &nbsp; 17:00:00</option> 
+  <option value="18:00:00">&nbsp; &nbsp; 18:00:00</option> 
+  <option value="19:00:00">&nbsp; &nbsp; 19:00:00</option> 
+  <option value="20:00:00">&nbsp; &nbsp; 20:00:00</option> 
+  <option value="21:00:00">&nbsp; &nbsp; 21:00:00</option> 
+  <option value="22:00:00">&nbsp; &nbsp; 22:00:00</option> 
+  <option value="23:00:00">&nbsp; &nbsp; 23:00:00</option> 
+
+  {%endif%}
+</select>
+<label   style="margin-left: 24px;"> Retard accepté</label>
+<select id="retard"    name="retardapresmidi">
+   {%if retardapresmidi=='00:05:00'%}
+  <option value="00:05:00" "selected="selected">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardapresmidi=='00:10:00'%}
+  <option value="00:10:00" "selected="selected">&nbsp; &nbsp; 00:10:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardapresmidi=='00:15:00'%}
+  <option value="00:15:00""selected="selected">&nbsp; &nbsp; 00:15:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardapresmidi=='00:20:00'%}
+  <option value="00:20:00""selected="selected">&nbsp; &nbsp; 00:20:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardapresmidi=='00:25:00'%}
+  <option value="00:25:00""selected="selected">&nbsp; &nbsp; 00:25:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardapresmidi=='00:30:00'%}
+  <option value="00:30:00""selected="selected">&nbsp; &nbsp; 00:30:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardapresmidi=='00:35:00'%}
+  <option value="00:35:00""selected="selected">&nbsp; &nbsp; 00:35:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardapresmidi=='00:40:00'%}
+  <option value="00:40:00" "selected="selected">&nbsp; &nbsp; 00:40:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardapresmidi=='00:45:00'%}
+  <option value="00:45:00" "selected="selected">&nbsp; &nbsp; 00:45:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardapresmidi=='00:50:00'%}
+  <option value="00:50:00" "selected="selected">&nbsp; &nbsp; 00:50:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardapresmidi=='00:55:00'%}
+  <option value="00:55:00" "selected="selected">&nbsp; &nbsp; 00:55:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardapresmidi=='01:00:00'%}
+  <option value="01:00:00" "selected="selected">&nbsp; &nbsp; 01:00:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardapresmidi=='01:05:00'%}
+  <option value="01:05:00" "selected="selected">&nbsp; &nbsp; 01:05:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+    {%elseif retardapresmidi=='01:15:00'%}
+ <option value="01:15:00" "selected="selected">&nbsp; &nbsp; 01:15:00</option>
+   <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+   {%elseif retardapresmidi=='01:20:00'%}
+  <option value="01:20:00" "selected="selected">&nbsp; &nbsp; 01:20:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option> 
+   {%elseif retardapresmidi=='01:25:00'%}
+ <option value="01:25:00" "selected="selected">&nbsp; &nbsp; 01:25:00</option>
+   <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+    {%elseif retardapresmidi=='01:30:00'%}
+ <option value="01:30:00" "selected="selected">&nbsp; &nbsp; 01:30:00</option>
+   <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%endif%}
+</select>
+</div>
+
+</div>
+
+  <div class="form-group" style="margin-top: 27px; color:black;display:none;" name="unique" id="unique">
+
+<label  style="margin-left: 128px;" >Matin</label>
+
+<select id="retard"    name="matinunique">
+
+  {%if heurematin=='07:00:00'%}
+    <option value="07:00:00 "selected="selected">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option> 
+  {%elseif heurematin=='08:00:00'%}
+  <option value="08:00:00" "selected="selected">&nbsp; &nbsp; 08:00:00</option>
+   <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option>
+  {%elseif heurematin=='09:00:00'%}
+  <option value="09:00:00" "selected="selected">&nbsp; &nbsp; 09:00:00</option>
+   <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option>
+  {%elseif heurematin=='10:00:00'%}
+  <option value="10:00:00" "selected="selected">&nbsp; &nbsp; 10:00:00</option>
+   <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+ 
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option>
+  {%elseif heurematin=='11:00:00'%}
+  <option value="11:00:00" "selected="selected">&nbsp; &nbsp; 11:00:00</option>
+   <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option>
+  {%elseif heurematin=='12:00:00'%}
+  <option value="12:00:00" "selected="selected">&nbsp; &nbsp; 12:00:00</option> 
+   <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option>
+    {%elseif heurematin=='13:00:00'%}
+ <option value="13:00:00" "selected="selected">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+   
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option>
+   {%elseif heurematin=='14:00:00'%}
+  <option value="14:00:00" "selected="selected">&nbsp; &nbsp; 14:00:00</option> 
+   <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option>
+  {%elseif heurematin=='15:00:00'%}
+  <option value="15:00:00" "selected="selected">&nbsp; &nbsp; 15:00:00</option> 
+   <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  
+  <option value="16:00:00">&nbsp; &nbsp; 16:00:00</option>
+  {%elseif heurematin=='16:00:00'%}
+  <option value="16:00:00" "selected="selected">&nbsp; &nbsp; 16:00:00</option> 
+   <option value="07:00:00">&nbsp; &nbsp; 07:00:00</option>
+  <option value="08:00:00">&nbsp; &nbsp; 08:00:00</option>
+  <option value="09:00:00">&nbsp; &nbsp; 09:00:00</option>
+  <option value="10:00:00">&nbsp; &nbsp; 10:00:00</option>
+  <option value="11:00:00">&nbsp; &nbsp; 11:00:00</option>
+  <option value="12:00:00">&nbsp; &nbsp; 12:00:00</option> 
+  <option value="13:00:00">&nbsp; &nbsp; 13:00:00</option> 
+  <option value="14:00:00">&nbsp; &nbsp; 14:00:00</option> 
+  <option value="15:00:00">&nbsp; &nbsp; 15:00:00</option> 
+  
+
+  {%endif%}
+</select> 
+<label style="margin-left: 24px;" >Retard accepté</label>
+<select id="retard"    name="retardmatinunique">
+
+  {%if retardmatin=='00:05:00'%}
+   <option value="00:05:00" "selected="selected">&nbsp; &nbsp; 00:05:00</option>
+    
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:10:00'%}
+  <option value="00:10:00" "selected="selected">&nbsp; &nbsp; 00:10:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:15:00'%}
+  <option value="00:15:00""selected="selected">&nbsp; &nbsp; 00:15:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:20:00'%}
+  <option value="00:20:00""selected="selected">&nbsp; &nbsp; 00:20:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:25:00'%}
+  <option value="00:25:00""selected="selected">&nbsp; &nbsp; 00:25:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:30:00'%}
+  <option value="00:30:00""selected="selected">&nbsp; &nbsp; 00:30:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:35:00'%}
+  <option value="00:35:00""selected="selected">&nbsp; &nbsp; 00:35:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:40:00'%}
+  <option value="00:40:00" "selected="selected">&nbsp; &nbsp; 00:40:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:45:00'%}
+  <option value="00:45:00" "selected="selected">&nbsp; &nbsp; 00:45:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:50:00'%}
+  <option value="00:50:00" "selected="selected">&nbsp; &nbsp; 00:50:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='00:55:00'%}
+  <option value="00:55:00" "selected="selected">&nbsp; &nbsp; 00:55:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='01:00:00'%}
+  <option value="01:00:00" "selected="selected">&nbsp; &nbsp; 01:00:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+  {%elseif retardmatin=='01:05:00'%}
+  <option value="01:05:00" "selected="selected">&nbsp; &nbsp; 01:05:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+    {%elseif retardmatin=='01:15:00'%}
+ <option value="01:15:00" "selected="selected">&nbsp; &nbsp; 01:15:00</option>
+   <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+   {%elseif retardmatin=='01:20:00'%}
+  <option value="01:20:00" "selected="selected">&nbsp; &nbsp; 01:20:00</option> 
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+   {%elseif retardmatin=='01:25:00'%}
+  <option value="01:25:00" "selected="selected">&nbsp; &nbsp; 01:25:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:30:00">&nbsp; &nbsp; 01:30:00</option>
+    {%elseif retardmatin=='01:30:00'%}
+  <option value="01:30:00" "selected="selected">&nbsp; &nbsp; 01:30:00</option>
+    <option value="00:05:00">&nbsp; &nbsp; 00:05:00</option>
+  <option value="00:10:00">&nbsp; &nbsp; 00:10:00</option>
+  <option value="00:15:00">&nbsp; &nbsp; 00:15:00</option>
+  <option value="00:20:00">&nbsp; &nbsp; 00:20:00</option>
+  <option value="00:25:00">&nbsp; &nbsp; 00:25:00</option>
+  <option value="00:30:00">&nbsp; &nbsp; 00:30:00</option>
+  <option value="00:35:00">&nbsp; &nbsp; 00:35:00</option>
+  <option value="00:40:00">&nbsp; &nbsp; 00:40:00</option>
+  <option value="00:45:00">&nbsp; &nbsp; 00:45:00</option>
+  <option value="00:50:00">&nbsp; &nbsp; 00:50:00</option>
+  <option value="00:55:00">&nbsp; &nbsp; 00:55:00</option>
+  <option value="01:00:00">&nbsp; &nbsp; 01:00:00</option>
+  <option value="01:05:00">&nbsp; &nbsp; 01:05:00</option>
+  <option value="01:15:00">&nbsp; &nbsp; 01:15:00</option>
+  <option value="01:20:00">&nbsp; &nbsp; 01:20:00</option>
+  <option value="01:25:00">&nbsp; &nbsp; 01:25:00</option>
+  
+  {%endif%}
+</select>
+
+
+</div>
+                     
+
+              
+             <a href="" > <button class="btn btn-warning" href="index.html"     style="margin-left:263px;" type="submit">Modifier</button></a>
+             
+              </form> 
+            </div> 
+            <!-- /form-panel -->
+          </div>
+          <!-- /col-lg-12 -->
+        </div> 
+
+ 
+
+ 
+        {% block javascripts %}
+  <!-- js placed at the end of the document so the pages load faster -->
+  
+  <script src="{{asset('lib/bootstrap/js/bootstrap.min.js')}}"></script>
+  <script class="include" type="text/javascript" src="{{asset('lib/jquery.dcjqaccordion.2.7.js')}}"></script>
+  <script src="{{asset('lib/jquery.scrollTo.min.js')}}"></script>
+  <script src="{{asset('lib/jquery.nicescroll.js')}}" type="text/javascript"></script>
+
+  <!--common script for all pages-->
+   
+  <!--script for this page-->
+  
+  <script type="text/javascript" src="{{asset('lib/bootstrap-fileupload/bootstrap-fileupload.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-daterangepicker/date.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-daterangepicker/moment.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-timepicker/js/bootstrap-timepicker.js')}}"></script>
+  <script src="{{asset('lib/advanced-form-components.js')}}"></script>
+   
+ <script type="text/javascript">
+   var maxField = 10; //Input fields increment limitation
+    var addButton = $('.add_button'); //Add button selector
+    var wrapper = $('.field_wrapper'); //Input field wrapper
+    var wrappers = $('.field_wrappers');
+    var fieldHTML = '<div><input type="text" name="domaine[]" class="form-control form-control-inline " size="16" style="width:293px" value=""/><a href="javascript:void(0);" class="remove_button btn btn-danger  btn-sm" style="margin-left: 309px;margin-top: -52px;"><i class="fa fa-trash-o"></i></a></div>'; //New input field html 
+    var x = 1; //Initial field counter is 1
+    
+    //Once add button is clicked
+    $(addButton).click(function(){
+        //Check maximum number of input fields
+        if(x < maxField){ 
+            x++; //Increment field counter
+            $(wrapper).append(fieldHTML); //Add field html
+        }
+    });
+    
+    //Once remove button is clicked
+    $(wrapper).on('click', '.remove_button', function(e){
+        e.preventDefault();
+        $(this).parent('div').remove(); //Remove field html
+        x--; //Decrement field counter
+    });
+     $(wrappers).on('click', '.remove_button', function(e){
+        e.preventDefault();
+        $(this).parent('div').remove(); //Remove field html
+        x--; //Decrement field counter
+    });
+ function yesnoCheck(){
+   if (document.getElementById('yesCheck').checked) {
+        document.getElementById('double').style.display = 'block';
+         document.getElementById('unique').style.display = 'none';
+        
+    } 
+ }function nonoCheck(){
+   if (document.getElementById('noCheck').checked) {
+        document.getElementById('double').style.display = 'none';
+         document.getElementById('unique').style.display = 'block';
+        
+    } 
+ }
+$("#righttip").tooltip({
+            placement:"right"
+        });    
+</script>
+{% endblock %}
+{% endblock %}

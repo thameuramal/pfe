@@ -1,0 +1,7 @@
+parameters:
+ urlMongodb: mongodb://localhost:27017/dbsharing
+ dnsname: testdns 
+ nameDBMogodb: dbsharing
+ mailuser: tst 
+ companynames: SHARING,IBS,TUNIGROS
+ 

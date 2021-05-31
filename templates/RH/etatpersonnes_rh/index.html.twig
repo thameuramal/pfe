@@ -1,0 +1,93 @@
+{% extends 'RH/statistique_rh/baserh.html.twig' %}
+
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-fileupload/bootstrap-fileupload.css')}}" >
+  <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-datepicker/css/datepicker.css')}}">
+  <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-daterangepicker/daterangepicker.css')}}" >
+  <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-timepicker/compiled/timepicker.css')}}" >
+  <link rel="stylesheet" type="text/css" href="{{asset('lib/bootstrap-datetimepicker/datertimepicker.css')}}" >
+{% endblock %}
+{% block body %}
+  
+  <div class="col-lg-12" style="width:634px;margin-left:278px;margin-top:18px;">
+            <div class="form-panel">
+<form class="form-horizontal style-form"  action="{{ path('etatmodifier',{'idemp':idemp,'idsociete':idsociete,'matricule':matricule,'nomsociete':societe,'nom':nom})}}">
+        
+        <div class="login-wrap"> 
+        <div class="form-group" >
+        <label  label class="control-label col-md-3" style="font-size:15px;color:black" > Nom Prenom</label>
+         <div class="col-md-3 col-xs-11" style="width: 267px;">
+          <label  class="form-control" style="color:black" > {{nom}}</label>
+           </div> 
+          </div>
+          
+           <div class="form-group" >
+        <label  label class="control-label col-md-3" style="font-size:15px;color:black" > Societe</label>
+         <div class="col-md-3 col-xs-11" style="width: 267px;">
+          <label  class="form-control" style="color:black" >{{societe}}</label>
+         </div></div>
+          <br>
+          
+          <div class="form-group" >
+        <label   class="control-label col-md-3" style="font-size:15px;color:black" > matricule</label>
+         <div class="col-md-3 col-xs-11" style="width: 267px;">
+          <label " class="form-control" style="color:black" > {{matricule}}</label>
+          </div></div>
+          <br>
+         <div class="form-group" >
+         <label for="role" class="control-label col-md-3" style="font-size:15px;color:black">Etat:</label>
+         <div class="col-md-3 col-xs-11" style="width: 267px;margin-left: 19px;">
+<select id="role" class="form-control" name="role">
+  <option value="En Mission">En Mission</option>
+  <option value="En Congé">En Congé</option>
+ 
+  
+</select>
+</div>
+</div>
+ <div class="form-group" >
+ <label class="control-label col-md-3" style="font-size:14px;color:black">Date debut </label>
+                      <input type="date" class="control-label col-md-3"  name="to" style="width:167px;margin-left:-50px;padding-top:0px; margin-top:5px">
+                     <label class="control-label col-md-3" style="font-size:14px;color:black ; margin-left:11px;">Date fin</label>
+                      <input type="date"  class="control-label col-md-3" name="from" style="width:167px;margin-left:107px;margin-top:-23px;padding-top:0px;">
+                    
+         </div>
+          <hr>
+         
+          <div class="registration">
+           <a href="" > <button class="btn btn-warning" href="index.html" type="submit"> Modifier</button></a>
+
+          </div>
+        </div>
+    
+        <!-- modal -->
+      </form>
+
+ 
+  </div></div>
+
+
+
+
+ 
+ {% block javascripts %}
+ <script src="{{asset('lib/jquery/jquery.min.js')}}"></script>
+  <script src="{{asset('lib/bootstrap/js/bootstrap.min.js')}}"></script>
+  <script class="include" type="text/javascript" src="{{asset('lib/jquery.dcjqaccordion.2.7.js')}}"></script>
+  <script src="{{asset('lib/jquery.scrollTo.min.js')}}"></script>
+  <script src="{{asset('lib/jquery.nicescroll.js')}}" type="text/javascript"></script>
+  <!--common script for all pages-->
+  
+  <!--script for this page-->
+  
+  <script type="text/javascript" src="{{asset('lib/bootstrap-fileupload/bootstrap-fileupload.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-daterangepicker/date.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-daterangepicker/moment.min.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/bootstrap-timepicker/js/bootstrap-timepicker.js')}}"></script>
+  <script src="{{asset('lib/advanced-form-components.js')}}"></script>
+  
+{% endblock %}
+{% endblock %}

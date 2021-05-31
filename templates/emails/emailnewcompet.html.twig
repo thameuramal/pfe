@@ -1,0 +1,18 @@
+<link rel="stylesheet" href="css/style1.css">
+{% block html %}
+
+
+<p style="margin-left:178px;font-size: 19pt;font-family: serif;color: #505050; " >Utilisez ces informations de connexion pour vous connecter</p><br>
+<hr style="width:50%;margin-top: -9px;">
+<div class="form-group" style="margin-left:356px;margin-top:44px;">
+<label class="control-label col-md-3" style="font-size:15px;color:black; font-weight:bold;">Email:</label> 
+<label class="control-label col-md-3" style="font-size:15px;color:black">{{login}}</label> </div>
+<div class="form-group" style="margin-left:356px;margin-top:44px;">
+<label class="control-label col-md-3" style="font-size:15px;color:black; font-weight:bold;">Mot de passe:</label> 
+<label class="control-label col-md-3" style="font-size:15px;color:black">{{password}}</label></div>
+<div class="form-group" style="margin-left:356px;margin-top:44px;">
+<b >{{url}}</b> 
+<label  style="margin-left:323px; font-size:20px;color:#15c;" > Se connecter</label>
+
+</div>
+{% endblock %} 

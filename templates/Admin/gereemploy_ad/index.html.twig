@@ -1,0 +1,167 @@
+{% extends 'Admin/statistique_ad/index.html.twig' %}
+
+  {% block stylesheets %}
+  <link href="{{asset('img/favicon.png')}}" rel="icon">
+  <link href="{{asset('img/apple-touch-icon.png')}}" rel="apple-touch-icon">
+ 
+  <!-- Bootstrap core CSS -->
+  <link href="{{asset('lib/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet">
+  <!--external css-->
+  <link href="{{asset('lib/font-awesome/css/font-awesome.css')}}" rel="stylesheet" >
+  <link href="{{asset('lib/advanced-datatable/css/demo_page.css')}}" rel="stylesheet" >
+  <link href="{{asset('lib/advanced-datatable/css/demo_table.css')}}" rel="stylesheet" >
+  <link rel="stylesheet" href="{{asset('lib/advanced-datatable/css/DT_bootstrap.css')}}" >
+  <!-- Custom styles for this template -->
+  <link href="{{asset('css/style.css')}}" rel="stylesheet">
+  <link href="{{asset('css/style-responsive.css')}}" rel="stylesheet">
+ 
+  
+   
+ {% endblock %}
+ 
+{% block body %}
+<div class="showback">
+              <h4> Nos Employe</h4>
+             <a href="{{path('create_employe')}}" ><button type="button"  class="btn btn-theme">Ajouter un employe</button> </a>
+</div> 
+<div class="row mb">
+          <!-- page start-->
+          <div class="content-panel" style="margin-left:10px;">
+            <div class="adv-table">
+              <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
+                <thead>
+                  <tr>
+                    <th>Nom</th>
+                    <th>Prenom</th>
+                    <th class="hidden-phone">Matricule</th>
+                    <th class="hidden-phone">Societe</th>
+                    <th class="hidden-phone">Numero de telephone</th>
+                    <th class="hidden-phone">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for emp in employe%}
+                  <tr class="gradeX">
+                  
+                    <td>{{emp.nom}}</td>
+                    <td>{{emp.prenom}}</td>
+                    <td class="hidden-phone">{{emp.matricule}}</td>
+                    <td class="center hidden-phone">{{emp.societe}}</td>
+                    <td class="center hidden-phone">{{emp.numeroDeTelephone}}</td>
+                    
+                  </tr>
+                  {%endfor%}
+                
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- page end-->
+        </div>
+        <!-- /row -->
+     
+      
+{% block javascripts %}
+ 
+  <script type="text/javascript" language="javascript" src="{{asset('lib/advanced-datatable/js/jquery.js')}}"></script>
+  
+ <script class="include" type="text/javascript" src="{{asset('lib/jquery.dcjqaccordion.2.7.js')}}"></script>
+  <script src="{{asset('lib/jquery.scrollTo.min.js')}}"></script>
+  <script src="{{asset('lib/jquery.nicescroll.js')}}" type="text/javascript"></script>
+  <script type="text/javascript" language="javascript" src="{{asset('lib/advanced-datatable/js/jquery.dataTables.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/advanced-datatable/js/DT_bootstrap.js')}}"></script>
+  <!--common script for all pages-->
+  
+  <!--script for this page-->
+ <script type="text/javascript">
+    /* Formating function for row details */
+    function fnFormatDetails(oTable, nTr) {
+      var aData = oTable.fnGetData(nTr);
+      var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+      sOut += '<tr><td>Rendering engine:</td><td>' + aData[1] + ' ' + aData[4] + '</td></tr>';
+      sOut += '<tr><td>Link to source:</td><td>Could provide a link here</td></tr>';
+      sOut += '<tr><td>Extra info:</td><td>And any further details here (images etc)</td></tr>';
+      sOut += '</table>';
+
+      return sOut;
+    }
+
+    $(document).ready(function() {
+
+      $('#hidden-table-info').dataTable({
+            "bDestroy": true
+      }).fnDestroy();
+       /*
+       * Insert a 'details' column to the table
+       */
+      var nCloneTh = document.createElement('th');
+      var nCloneTd = document.createElement('td');
+      nCloneTd.innerHTML = '<img src="{{asset('lib/advanced-datatable/images/details_open.png')}}">';
+      nCloneTd.className = "center";
+
+      $('#hidden-table-info thead tr').each(function() {
+        this.insertBefore(nCloneTh, this.childNodes[0]);
+      });
+
+      $('#hidden-table-info tbody tr').each(function() {
+        this.insertBefore(nCloneTd.cloneNode(true), this.childNodes[0]);
+      });
+       
+      /*
+       * Initialse DataTables, with no sorting on the 'details' column
+       */
+      var oTable = $('#hidden-table-info').dataTable({
+        "aoColumnDefs": [{
+          "bSortable": false,
+          "aTargets": [0]
+        }],
+        "aaSorting": [
+          [1, 'asc']
+        ]
+      });
+
+      /* Add event listener for opening and closing details
+       * Note that the indicator for showing which row is open is not controlled by DataTables,
+       * rather it is done here
+       */
+      $('#hidden-table-info tbody td img').live('click', function() {
+        var nTr = $(this).parents('tr')[0];
+        if (oTable.fnIsOpen(nTr)) {
+          /* This row is already open - close it */
+          this.src = "{{asset('lib/advanced-datatable/media/images/details_open.png')}}";
+          oTable.fnClose(nTr);
+        } else {
+          /* Open this row */
+          this.src = "{{asset('lib/advanced-datatable/images/details_close.png')}}";
+          oTable.fnOpen(nTr,fnFormatDetails(oTable, nTr),'details');
+        }
+      });
+    });
+  </script>
+   
+{% endblock %}
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

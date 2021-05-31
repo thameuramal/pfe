@@ -1,0 +1,153 @@
+
+
+ 
+<head>
+    <meta charset="UTF-8">
+    <title>Connexion</title>
+    
+  
+
+  <!-- Bootstrap core CSS -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!--external css-->
+  <link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/style-responsive.css" rel="stylesheet">
+    <style>
+        body{
+            margin: 0;
+            padding: 0; 
+        }
+        body:before{
+            content: '';
+            position: fixed;
+            width: 100vw;
+            margin-top:-50px;
+            height: 100vh;
+            background-image: url("img/background.jpg");
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+            -webkit-filter: blur(50px);
+            -moz-filter: blur(50px);
+            -o-filter: blur(50px);
+            -ms-filter: blur(50px);
+            filter: blur(50px);
+        }
+        .contact-form
+        {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            width: 400px;
+            height:484px;
+            padding: 80px 40px;
+            box-sizing: border-box;
+            background: rgba(0,0,0,.5);
+        }
+       
+      
+        .contact-form p
+        {
+            margin: 0;
+            padding: 0;
+            font-weight: bold;
+            color: #fff;
+            margin-top: 50px;
+        }
+        .contact-form input
+        {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        .contact-form input[type="text"],
+        .contact-form input[type="password"]
+        {
+            border: none;
+            border-bottom: 1px solid #fff;
+            background: transparent;
+            outline: none;
+            height: 40px;
+            color: #fff;
+            font-size: 16px;
+        }
+        .contact-form input[type="submit"] {
+            height: 30px;
+            color: #fff;
+            font-size: 15px;
+            background:#4ECDC4 !important;
+            cursor: pointer;
+            border-radius: 25px;
+            border: none; 
+            outline: none;
+            margin-top: 15%;
+        }
+        .contact-form a
+        {
+            color:#fbf8f8;
+            font-size: 14px;
+            font-weight: bold;
+           
+            text-decoration: none;
+        }
+        input[type="checkbox"] {
+            width: 20%;
+        }
+        .contact-form label {
+           color: #f7f6f6;
+           }
+    </style>
+</head>
+<body>
+test {{'18 mai 2021'|split(' ')[0]}} {{'18 mai 2021'|split(' ')[1]}} {{'18 mai 2021'|split(' ')[2]}} 
+ test2 {{'18/12/2021'|split('/')[0]}} {{'18/12/2021'|split('/')[1]}} {{'18/12/2021'|split('/')[2]}}
+    <form class="form-login" action="{{path('testrole')}}" methode="post">
+    <div class="contact-form" style="margin-top:12px;">
+
+        <h2 class="form-login-heading" style="margin-top:-81px; width:402px;margin-left:-42px">Connexion</h2>
+        <div class="login-wrap" style="margin-top:42px;width:325px">
+        <input type="text" class="form-control" placeholder="Email..." name="email" >
+          <br>
+          <input type="text" class="form-control" placeholder="Password..." name="matricule" >
+          <br>
+          <label class="checkbox">
+            <input type="checkbox" value="remember-me"> Remember me
+            <span class="pull-right">
+            <a data-toggle="modal" href="login.html#myModal"> Forgot Password?</a>
+            </span>
+            </label>
+            <br>
+         
+          <button class="btn btn-theme btn-block" href="index.html" style="margin-top:26px" type="submit"><i class="fa fa-lock"></i> Connecter</button>
+         
+        <label  style="margin-top: 17px;margin-left: 94px;">
+            <a data-toggle="modal" href="{{path('newcompter')}}"> Créer un compter</a>
+            </label>
+        
+        </div>
+        <br>
+        <!-- Modal -->
+        
+        </div>
+      </form>
+        
+</body>
+<script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+  <!--BACKSTRETCH-->
+  <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+  <script type="text/javascript" src="lib/jquery.backstretch.min.js"></script>
+  
+</html>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,128 @@
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="author" content="Dashboard">
+  <meta name="keyword" content="Dashboard, Bootstrap, Admin, Template, Theme, Responsive, Fluid, Retina">
+  <title>Login</title>
+
+  <!-- Favicons -->
+  <link href="img/logo.jpg" rel="icon">
+  <link href="img/apple-touch-icon.png" rel="apple-touch-icon">
+
+  <!-- Bootstrap core CSS -->
+  <link href="lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <!--external css-->
+  <link href="lib/font-awesome/css/font-awesome.css" rel="stylesheet" />
+  <!-- Custom styles for this template -->
+  <link href="css/style.css" rel="stylesheet">
+  <link href="css/style-responsive.css" rel="stylesheet">
+ 
+</head>
+<body >
+
+
+ 
+ 
+  <div id="login-page">
+    <div class="container">
+    
+
+
+     {% for message in app.flashes('message') %}
+       <div class="alert alert-success"style="width: 750px;margin-left: 238px;"> {{ message }}</div>
+{% endfor %}
+{% for message in app.flashes('danger') %}
+     <div class="alert alert-danger" style="width: 750px;margin-left: 238px;">   {{ message }} </div>
+{% endfor %}
+{% for message in app.flashes('warning') %}
+        {{ message }}
+{% endfor %}
+      <form class="form-login"  method="POST" style="height:485px  !important;">
+        <h2 class="form-login-heading">S'identifier</h2>
+        <div class="login-wrap" style="margin-top: 30px;">
+        {% if error %}
+     
+        <div class="alert alert-danger" >{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="checkbox mb-3">You are logged in as {{ app.user.username }}, <a href="{{ path('app_logout') }}">Logout</a>
+    {% endif %}
+     <label for="inputEmail" class="sr-only">Email</label>
+    
+        <input  type="email"  class="form-control  value="{{ last_username }}" name="email" id="inputEmail"  style="color:black;width:287px;height:40px; font-family: 'FontAwesome'" placeholder="Email" required autofocus>
+   
+<br>
+ <label for="inputPassword" class="sr-only">Password</label>
+          <input type="password" name="password" id="inputPassword" class="form-control"  style="margin-top: 32px;height: 40px;" placeholder="Password" required>
+                    <label style="margin-top: 13px;margin-left: 151px;"><a class="Connecter" data-toggle="modal" href="login.html#myModal" style="color:#D8534F">Mot de passe oublié ? </a></label>
+
+          <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}">
+          <br>
+            {% for message in app.flashes('empty') %}
+            <div class="emptyinput" style="margin-top: -2px;width: 390px;margin-left: 17px;color:#D93025">
+                <i class="fa fa-exclamation-triangle" style="font-size: 14px;margin-top: 0px;"></i><p style="font-size: 11px;margin-left: 21px;margin-top: -16px;"><strong>{{ message }}</strong></p>
+            </div> 
+        {% endfor %}<br>
+         
+          <button class="btn btn-theme btn-block" href="index.html" type="submit" style=" margin-top:13px;height:40px;width:123px;margin-left:82px"><i class="fa fa-edit" style=" margin-top:6px;height:30px;"></i> Connxion</button>
+         
+          <label style="margin-top: 16px;margin-left: 97px;"><a class="Connecter" href="{{path('newaccount')}}">Créer un compte</a></label>
+         </div>
+        <!-- Modal -->
+       
+        <!-- modal -->
+      </form>
+    </div>
+  </div>
+  <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+            
+              <div class="modal-header">
+              
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Retrouvez votre compte</h4>
+              </div>
+              <div class="modal-body">
+                <p>Veuillez entrer votre adresse e-mail et votre matricule pour rechercher votre compte.</p>
+              </div>
+              <div class="modal-footer">
+              
+                <form method="post" action="{{path('forgetpassword')}}">
+                <input type="text" name="email" placeholder="Email" autocomplete="off" class="form-control placeholder-no-fix" required autofocus>
+                <input type="text" name="matricule" placeholder="Matricule" autocomplete="off" class="form-control placeholder-no-fix" style="margin-top:10px" required autofocus>
+ 
+                 <button data-dismiss="modal" class="btn btn-default" type="button" style="margin-top:10px">Annuler</button>
+                <button class="btn btn-theme" type="submit" style="margin-top:10px">Envoyer</button>
+                 </form>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+  <!-- js placed at the end of the document so the pages load faster -->
+  <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+  <!--BACKSTRETCH-->
+  <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+  <script type="text/javascript" src="lib/jquery.backstretch.min.js"></script>
+  
+
+ <script src="lib/jquery/jquery.min.js"></script>
+  <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+  <!--BACKSTRETCH-->
+  <!-- You can use an image of whatever size. This script will stretch to fit in any screen size.-->
+  <script type="text/javascript" src="lib/jquery.backstretch.min.js"></script>
+ <script>
+    $.backstretch("img/login10.jpg", {
+      speed: 500
+    });
+  </script>
+</body>
+
+</html>

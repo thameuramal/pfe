@@ -1,0 +1,137 @@
+{% extends 'Admin/statistique_ad/basead.html.twig' %}
+
+
+
+{% block title %}L'état de présence instantané {% endblock %}
+
+{% block stylesheets %} 
+
+<link href="{{asset('img/favicon.png')}}" rel="icon">
+  <link href="{{asset('img/apple-touch-icon.png')}}" rel="apple-touch-icon">
+ 
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="{{asset('lib/bootstrap/css/bootstrap.min.css')}}">
+  <!--external css-->
+  <link rel="stylesheet" href="{{asset('css/zabuto_calendar.css')}}">
+  <link rel="stylesheet" href="{{asset('lib/font-awesome/css/font-awesome.css')}}" rel="stylesheet">
+  <link rel="stylesheet" href="{{asset('lib/gritter/css/jquery.gritter.css')}}">
+  <!-- Custom styles for this template -->
+   <link rel="stylesheet" href="{{asset('css/style.css')}}">
+   
+  <link rel="stylesheet" href="{{asset('css/style-responsive.css')}}">
+   
+  <script src="{{asset('lib/chart-master/Chart.js')}}"></script>
+   <link rel="stylesheet" href="{{asset('plugins/fontawesome-free/css/all.min.css')}}">
+  
+
+  <link rel="stylesheet" href="{{asset('dist/css/adminlte.min.css')}}">
+{% endblock %}
+{% block body %}
+<nav class="mt-12" style ="margin-top:100px">      
+  
+<ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false" >
+ {% for output in info%} 
+  <li class="nav-item " style ="margin-top:20px ;">
+            <a href="#" class="nav-link" style="color:#ffffff;background-color:#4ECDC4">
+              <i class="nav-icon fas fa-building"></i>
+              <p style="color:#ffffff">
+                <b style="font-size:15px;color:#ffffff"> {{ output['nome']}} </b>
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+               
+                 
+             
+
+<form class="form-horizontal style-form" method="get">
+             <div class="form-group" " style="margin-top: 21px;">
+                 
+                  <label class="label label-success col-xs-2 .col-sm-2" style="margin-left:262px;font-size:13px ">
+                  
+                <i class="fas  fa-arrow-down"></i>
+                   Time In
+                   </label>
+                  <label  class="label label-danger col-xs-2 .col-md-2" style="margin-left:250px;font-size:13px"> 
+                  <i class="fas fa-arrow-up"></i>
+                   Time Out  
+                   </label>
+                  
+                </div>
+                 <div class="form-group">
+                 
+                    <label class="control-label col-md-3" style="margin-left:295px">
+                    {% for emp in output['employe'] %}
+                    {% for etat in output['etatin'] %}
+              
+              
+              {%if etat['id'] == emp.idemp %}
+                 {{emp.nom }}</br>
+                
+               
+              {%endif%}
+               
+              {%endfor%}
+                {%endfor%}
+
+              </label>
+              <label class="control-label col-md-3"style="margin-left:752px;margin-top: -137px;"> 
+              {% for emp in output['employe'] %}
+                    {% for etat in output['tmpsout'] %}
+             
+              
+              {%if etat['id'] == emp.idemp %}
+                
+                {{emp.nom}} <br>
+                
+              {%endif%}
+               
+              {%endfor%}
+              {%endfor%}
+                  </label>
+                </div>
+             </form>
+
+
+            
+                </ul>
+
+
+
+            
+
+ 
+ </li>
+ {%endfor%}
+</ul>
+</nav>
+
+
+
+
+{% block javascripts %}
+ <script src="{{asset('lib/jquery/jquery.min.js')}}"></script>
+  <script type="text/javascript"  src="{{asset('lib/advanced-datatable/js/jquery.js')}}"></script>
+ <script type="text/javascript"  src="{{asset('lib/advanced-datatable/js/jquery.dataTables.js')}}"></script>
+
+
+  <script type="text/javascript" src="{{asset('lib/advanced-datatable/js/DT_bootstrap.js')}}"></script>
+  <!-- Favicons -->
+  <script src="{{asset('lib/bootstrap/js/bootstrap.min.js')}}"></script>
+  <script class="include" type="text/javascript" src="{{asset('lib/jquery.dcjqaccordion.2.7.js')}}"></script>
+  <script src="{{asset('lib/jquery.scrollTo.min.js')}}"></script>
+  <script src="{{asset('lib/jquery.nicescroll.js')}}" type="text/javascript"></script>
+  <script src="{{asset('lib/jquery.sparkline.js')}}"></script>
+  
+  <script type="text/javascript" src="{{asset('lib/gritter/js/jquery.gritter.js')}}"></script>
+  <script type="text/javascript" src="{{asset('lib/gritter-conf.js')}}"></script>
+  <!--script for this page-->
+  <script src="{{asset('lib/sparkline-chart.js')}}"></script>
+  <script src="{{asset('lib/zabuto_calendar.js')}}"></script>
+  
+  <script src="{{asset('plugins/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
+  <script src="{{asset('dist/js/adminlte.js')}}"></script>
+   
+    
+{% endblock %}
+{% endblock %}
